@@ -38,23 +38,24 @@ router.get('/add-product', function(req, res){
   var desc = "";
   var price = "";
 
-  Category.find(function(err, cats){
+  Category.find(function(err, categories){
     res.render('admin/add_product', {
       title: title,
       desc: desc,
-      categories: cats,
+      categories: categories,
       price: price
     });
   });
 });
 
 /*
-* POST add page
+* POST add product
 */
 
-router.post('/add-page', function(req, res){
+router.post('/add-product', function(req, res){
   req.checkBody('title', 'Title must have a value.').notEmpty();
-  req.checkBody('content', 'Content must have a value.').notEmpty();
+  req.checkBody('desc', 'Description must have a value.').notEmpty();
+  req.checkBody('price', 'Price must have a value.').isDecimal();
 
   var title = req.body.title;
   var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
